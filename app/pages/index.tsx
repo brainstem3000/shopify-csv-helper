@@ -21,7 +21,12 @@ const HomePage: React.FC = () => {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          validateCsv(result.meta.fields);
+          if (result.meta.fields) {
+            validateCsv(result.meta.fields);
+          } else {
+            console.error('No fields found in CSV');
+            setResults({ success: false, messages: ['No fields found in CSV'] });
+          }
         },
         error: (error) => {
           console.error('Error parsing CSV:', error);
